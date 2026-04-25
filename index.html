@@ -23,13 +23,27 @@
     <div id="screen-splash" class="screen active">
       <div class="splash-content">
         <div class="splash-icon">
-          <img src="icons/icon-192.png" alt="TM Paints" class="splash-logo">
+          <img src="icons/icon-512.png" alt="TM Paints" class="splash-logo">
         </div>
-        <h1 class="splash-title">TM Paints</h1>
-        <p class="splash-subtitle">& Sanitary Store</p>
-        <div class="splash-loader">
-          <div class="loader-bar"></div>
+        <div class="splash-title">TM Paints</div>
+        <div class="splash-subtitle">& Sanitary Store</div>
+        <div class="splash-loader"><div class="loader-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- AUTHENTICATION SCREEN -->
+    <div id="screen-auth" class="screen">
+      <div class="auth-container">
+        <div class="auth-header">
+          <span class="material-icons-round auth-icon">lock</span>
+          <h2>App Security</h2>
+          <p>Enter the store PIN to access inventory</p>
         </div>
+        <div class="auth-input-group">
+          <input type="password" id="input-pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••">
+        </div>
+        <button id="btn-auth" class="btn-primary">Unlock App</button>
+        <div id="auth-error" class="form-error">Incorrect PIN, please try again.</div>
       </div>
     </div>
 

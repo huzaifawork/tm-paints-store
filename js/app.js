@@ -19,6 +19,9 @@ let viewingId = null;
 let deleteTargetId = null;
 let isLoading = false;
 
+// ===== AUTH CONFIG =====
+const VALID_PIN = '1234'; // Default PIN completely securing the app
+
 // ===== SIZES CONFIG =====
 const PAINTS_SIZES = ['Quarter', 'Gallon', 'Drum', 'Drumy', 'Empty', '1 Litre', '4 Litres', '16 Litres'];
 const SANITARY_SIZES = ['1/2 inch', '3/4 inch', '1 inch', '2 inch', '3 inch', '4 inch', '100 Litres (Tank)', '500 Litres (Tank)', '1000 Litres (Tank)', '1 foot', '2 feet', 'Piece', 'Dozen'];
@@ -204,6 +207,11 @@ const DOM = {
   statTotal: $('#stat-total'),
   statPaints: $('#stat-paints'),
   statSanitary: $('#stat-sanitary'),
+
+  // Auth
+  inputPin: $('#input-pin'),
+  btnAuth: $('#btn-auth'),
+  authError: $('#auth-error')
 };
 
 // ===== SIZES DROPDOWN =====
@@ -609,6 +617,11 @@ function escapeHtml(str) {
 
 // ===== EVENT LISTENERS =====
 function initEvents() {
+  // Auth Submit
+  DOM.btnAuth.addEventListener('click', handleAuth);
+  DOM.inputPin.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') handleAuth();
+  });
   // FAB — Add Product
   $('#btn-add').addEventListener('click', openAddForm);
 
@@ -730,6 +743,21 @@ function initEvents() {
   });
 }
 
+// ===== AUTH HANDLER =====
+function handleAuth() {
+  const pin = DOM.inputPin.value;
+  if (pin === VALID_PIN) {
+    localStorage.setItem('tm_auth_unlocked', 'true');
+    DOM.authError.style.display = 'none';
+    DOM.inputPin.value = '';
+    navigate('home');
+  } else {
+    DOM.authError.style.display = 'block';
+    DOM.inputPin.value = '';
+    DOM.inputPin.focus();
+  }
+}
+
 // ===== SPLASH SCREEN =====
 function hideSplash() {
   setTimeout(() => {
@@ -738,7 +766,13 @@ function hideSplash() {
     setTimeout(() => {
       DOM.splash.style.display = 'none';
       DOM.splash.classList.remove('active');
-      navigate('home');
+      
+      // Check auth state
+      if (localStorage.getItem('tm_auth_unlocked') === 'true') {
+        navigate('home');
+      } else {
+        navigate('auth');
+      }
     }, 500);
   }, 1800);
 }
