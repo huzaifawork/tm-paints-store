@@ -20,7 +20,7 @@ let deleteTargetId = null;
 let isLoading = false;
 
 // ===== AUTH CONFIG =====
-const VALID_PIN = '1234'; // Default PIN completely securing the app
+const VALID_PIN = '0323'; // Default PIN completely securing the app
 
 // ===== SIZES CONFIG =====
 const PAINTS_SIZES = ['Quarter', 'Gallon', 'Drum', 'Drumy', 'Empty', '1 Litre', '4 Litres', '16 Litres'];
